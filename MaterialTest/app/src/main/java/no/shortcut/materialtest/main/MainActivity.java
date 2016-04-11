@@ -1,4 +1,4 @@
-package no.shortcut.materialtest;
+package no.shortcut.materialtest.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

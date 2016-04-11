@@ -7,6 +7,8 @@ import com.karumi.rosie.view.PresenterLifeCycleLinker;
 import com.karumi.rosie.view.RosieAppCompatActivity;
 import com.karumi.rosie.view.RosiePresenter;
 
+import no.shortcut.materialtest.R;
+
 public class MainActivity extends RosieAppCompatActivity {
 
     @Override

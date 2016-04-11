@@ -3,11 +3,35 @@ package no.shortcut.materialtest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.karumi.rosie.view.PresenterLifeCycleLinker;
+import com.karumi.rosie.view.RosieAppCompatActivity;
+import com.karumi.rosie.view.RosiePresenter;
+
+public class MainActivity extends RosieAppCompatActivity implements RosiePresenter.View {
+
+        private PresenterLifeCycleLinker presenterLifeCycleLinker = new PresenterLifeCycleLinker();
+
+        @Override protected void onCreate(Bundle savedInstanceState) {
+            presenterLifeCycleLinker.initializeLifeCycle(this, this);
+            super.onCreate(savedInstanceState);
+        }
+        @Override protected void onResume() {
+            presenterLifeCycleLinker.updatePresenters(this);
+            super.onResume();
+        }
+
+        @Override protected void onPause() {
+            presenterLifeCycleLinker.pausePresenters();
+            super.onPause();
+        }
+
+        @Override protected void onDestroy() {
+            super.onDestroy();
+        }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return 0;
     }
+
 }

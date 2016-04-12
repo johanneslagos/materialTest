@@ -3,17 +3,19 @@ package no.shortcut.materialtest.main.view;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.karumi.rosie.view.PresenterLifeCycleLinker;
-import com.karumi.rosie.view.RosieAppCompatActivity;
-import com.karumi.rosie.view.RosiePresenter;
-
+import butterknife.ButterKnife;
 import no.shortcut.materialtest.R;
 
-public class MainActivity extends RosieAppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+
+        //presenter = new LoginPresenter(this);
     }
 
 }

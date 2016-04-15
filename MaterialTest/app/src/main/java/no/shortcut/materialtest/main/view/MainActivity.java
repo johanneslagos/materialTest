@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
         drawerLayout.openDrawer(GravityCompat.START);
 
         presenter = new UserPresenter(this);
-        presenter.loadUserData("testing");
+        presenter.loadUserData("johannesla");
 
     }
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -93,14 +93,21 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
 
     @Override
     public void onUserLoadSuccess(userContainer user, Response response) {
+
         User currentUser = user.getUser();
 
-        TextView txtName = (TextView)navigationView.findViewById(R.id.txtUsername);txtName.setText(currentUser.getName());
-        TextView txtPlayCount = (TextView)navigationView.findViewById(R.id.txtPlayCount);txtPlayCount.setText("playcount: "+currentUser.getPlaycount());
+        TextView txtName = (TextView)navigationView.findViewById(R.id.txtUsername);
+        TextView txtPlayCount = (TextView)navigationView.findViewById(R.id.txtPlayCount);
         CircleImageView imgProfile = (CircleImageView) navigationView.findViewById(R.id.profile_image);
-        List<User.ImageInfo> images = currentUser.getImages();
-        String imageUrl= images.get(2).getImageUrl();
-        Picasso.with(this).load(imageUrl).into(imgProfile);
+
+        if(user.getUser() != null){
+            txtName.setText(currentUser.getName());
+            txtPlayCount.setText("playcount: "+currentUser.getPlaycount());
+            List<User.ImageInfo> images = currentUser.getImages();
+            String imageUrl= images.get(2).getImageUrl();
+            Picasso.with(this).load(imageUrl).into(imgProfile);
+        }
+
     }
 
     @Override
@@ -118,12 +125,15 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
 
         switch (item.getItemId()) {
             case R.id.gallery:
+                textView1.setText("Loading Gallery");
                 Toast.makeText(this.getApplicationContext(),"Showing Gallery",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.profile:
+                textView1.setText("Loading Profile");
                 Toast.makeText(this.getApplicationContext(),"Showing Profile",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.about:
+                textView1.setText("Loading About");
                 Toast.makeText(this.getApplicationContext(),"Showing About",Toast.LENGTH_SHORT).show();
                 return true;
             default:

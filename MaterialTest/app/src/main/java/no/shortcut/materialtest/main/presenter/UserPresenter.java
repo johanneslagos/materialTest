@@ -1,10 +1,9 @@
 package no.shortcut.materialtest.main.presenter;
 
-import no.shortcut.materialtest.main.model.User;
 import no.shortcut.materialtest.main.model.UserInteractor;
 import no.shortcut.materialtest.main.model.userContainer;
-import no.shortcut.materialtest.main.view.IMainView;
-import no.shortcut.materialtest.main.view.OnUserInteractorFinishedListener;
+import no.shortcut.materialtest.main.ui.view.IMainView;
+import no.shortcut.materialtest.main.ui.OnUserInteractorFinishedListener;
 import retrofit2.Response;
 
 /**

@@ -44,28 +44,6 @@ public class User {
     @Expose
     private String type;
 
-    public static class ImageInfo {
-        @SerializedName("#text") @Expose
-        String imageUrl;
-        @SerializedName("size") @Expose
-        String size;
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-        }
-
-        public String getSize() {
-            return size;
-        }
-
-        public void setSize(String size) {
-            this.size = size;
-        }
-    }
 
     /**
      *

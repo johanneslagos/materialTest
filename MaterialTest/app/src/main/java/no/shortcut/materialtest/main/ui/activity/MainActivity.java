@@ -1,16 +1,18 @@
-package no.shortcut.materialtest.main.view;
+package no.shortcut.materialtest.main.ui.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +24,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import no.shortcut.materialtest.R;
+import no.shortcut.materialtest.main.app.BaseActivity;
+import no.shortcut.materialtest.main.model.ImageInfo;
 import no.shortcut.materialtest.main.model.User;
 import no.shortcut.materialtest.main.model.userContainer;
 import no.shortcut.materialtest.main.presenter.UserPresenter;
+import no.shortcut.materialtest.main.ui.fragment.ArtistPlaylistFragment;
+import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
+import no.shortcut.materialtest.main.ui.view.IMainView;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements IMainView, NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG="MainActivity";
+public class MainActivity extends BaseActivity implements IMainView, NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
 
-    @Bind(R.id.textView1)
-    TextView textView1;
     //Variables
 
     @Bind(R.id.toolbar)
@@ -45,10 +50,14 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
     private UserPresenter presenter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
+        setContentView(view);
         ButterKnife.bind(this);
+
+        //setContentView(R.layout.activity_main);
+
         //toolbar.
         setSupportActionBar(toolbar);
         //navigationview..
@@ -60,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
 
         presenter = new UserPresenter(this);
         presenter.loadUserData("johannesla");
-
     }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.openDrawer,  R.string.closeDrawer);
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
     }
 
     @Override
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -96,48 +106,63 @@ public class MainActivity extends AppCompatActivity implements IMainView, Naviga
 
         User currentUser = user.getUser();
 
-        TextView txtName = (TextView)navigationView.findViewById(R.id.txtUsername);
-        TextView txtPlayCount = (TextView)navigationView.findViewById(R.id.txtPlayCount);
+        TextView txtName = (TextView) navigationView.findViewById(R.id.txtUsername);
+        TextView txtPlayCount = (TextView) navigationView.findViewById(R.id.txtPlayCount);
         CircleImageView imgProfile = (CircleImageView) navigationView.findViewById(R.id.profile_image);
 
-        if(user.getUser() != null){
+        if (user.getUser() != null) {
             txtName.setText(currentUser.getName());
-            txtPlayCount.setText("playcount: "+currentUser.getPlaycount());
-            List<User.ImageInfo> images = currentUser.getImages();
-            String imageUrl= images.get(2).getImageUrl();
+            txtPlayCount.setText("playcount: " + currentUser.getPlaycount());
+            List<ImageInfo> images = currentUser.getImages();
+            String imageUrl = images.get(2).getImageUrl();
             Picasso.with(this).load(imageUrl).into(imgProfile);
         }
-
     }
 
     @Override
     public void onUserLoadFailure(Throwable error) {
-        Log.d(TAG, "onUserLoadFailure: "+error);
-
+        Log.d(TAG, "onUserLoadFailure: " + error);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         if (item.isChecked()) item.setChecked(false);
         else item.setChecked(true);
+        Fragment fragment = null;
+        Class fragmentClass;
 
         //drawerLayout.closeDrawers();
 
         switch (item.getItemId()) {
             case R.id.gallery:
-                textView1.setText("Loading Gallery");
-                Toast.makeText(this.getApplicationContext(),"Showing Gallery",Toast.LENGTH_SHORT).show();
-                return true;
+                fragmentClass = ArtistPlaylistFragment.class;
+                Toast.makeText(this.getApplicationContext(), "Showing Gallery", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.profile:
-                textView1.setText("Loading Profile");
-                Toast.makeText(this.getApplicationContext(),"Showing Profile",Toast.LENGTH_SHORT).show();
-                return true;
+                fragmentClass = ArtistProfileFragment.class;
+                Toast.makeText(this.getApplicationContext(), "Showing Profile", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.about:
-                textView1.setText("Loading About");
-                Toast.makeText(this.getApplicationContext(),"Showing About",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(), "Showing About", Toast.LENGTH_SHORT).show();
                 return true;
             default:
-                return true;
+                fragmentClass = ArtistPlaylistFragment.class;
         }
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        //Inserting fragments...
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame, fragment).commit();
+
+//        menuItem.setChecked(true);
+//        setTitle(menuItem.getTitle());
+        drawerLayout.closeDrawers();
+        return true;
     }
 }

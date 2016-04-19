@@ -7,7 +7,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import no.shortcut.materialtest.main.view.MainActivity;
+import no.shortcut.materialtest.main.ui.activity.MainActivity;
+import no.shortcut.materialtest.main.ui.fragment.ArtistPlaylistFragment;
+import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
 
 /**
  * Created by Sijan Gurung on 15/04/16.
@@ -20,6 +22,8 @@ import no.shortcut.materialtest.main.view.MainActivity;
         injects = {
                 LastfmApplication.class,
                 MainActivity.class,
+                ArtistPlaylistFragment.class,
+                ArtistProfileFragment.class
 
         },
         library = true

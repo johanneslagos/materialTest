@@ -1,6 +1,5 @@
-package no.shortcut.materialtest.main.view;
+package no.shortcut.materialtest.main.ui.view;
 
-import no.shortcut.materialtest.main.model.User;
 import no.shortcut.materialtest.main.model.userContainer;
 import retrofit2.Response;
 

@@ -1,7 +1,7 @@
 package no.shortcut.materialtest.main.model;
 
 import no.shortcut.materialtest.main.repository.LastfmApiRepository;
-import no.shortcut.materialtest.main.view.OnUserInteractorFinishedListener;
+import no.shortcut.materialtest.main.ui.OnUserInteractorFinishedListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

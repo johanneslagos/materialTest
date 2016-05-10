@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/gallery"
+            android:checked="true"
+            android:icon="@drawable/vinyl_2"
+            android:title="Gallery" />
+
+        <item
+            android:id="@+id/profile"
+            android:checked="false"
+            android:icon="@drawable/user_2"
+            android:title="Profile" />
+
+        <item
+            android:id="@+id/about"
+            android:checked="false"
+            android:icon="@drawable/cd_cover_2"
+            android:title="About" />
+
+    </group>
+</menu>

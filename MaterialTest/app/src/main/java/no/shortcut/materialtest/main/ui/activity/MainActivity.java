@@ -3,9 +3,11 @@ package no.shortcut.materialtest.main.ui.activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -29,8 +31,10 @@ import no.shortcut.materialtest.main.model.ImageInfo;
 import no.shortcut.materialtest.main.model.User;
 import no.shortcut.materialtest.main.model.userContainer;
 import no.shortcut.materialtest.main.presenter.UserPresenter;
+import no.shortcut.materialtest.main.ui.adapter.ViewPagerAdapter;
 import no.shortcut.materialtest.main.ui.fragment.ArtistPlaylistFragment;
 import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
+import no.shortcut.materialtest.main.ui.fragment.UserTopAlbumsFragment;
 import no.shortcut.materialtest.main.ui.view.IMainView;
 import retrofit2.Response;
 
@@ -47,7 +51,13 @@ public class MainActivity extends BaseActivity implements IMainView, NavigationV
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
 
-    private UserPresenter presenter;
+    @Bind(R.id.tabs)
+    TabLayout tabLayout;
+
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
+
+    UserPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +77,19 @@ public class MainActivity extends BaseActivity implements IMainView, NavigationV
         drawerLayout.addDrawerListener(drawerToggle);
         drawerLayout.openDrawer(GravityCompat.START);
 
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
         presenter = new UserPresenter(this);
         presenter.loadUserData("johannesla");
+
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ArtistPlaylistFragment(), "Playlist");
+        adapter.addFragment(new UserTopAlbumsFragment(), "Top Albums");
+        viewPager.setAdapter(adapter);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -132,15 +153,9 @@ public class MainActivity extends BaseActivity implements IMainView, NavigationV
         Class fragmentClass;
 
         //drawerLayout.closeDrawers();
-
         switch (item.getItemId()) {
-            case R.id.gallery:
-                fragmentClass = ArtistPlaylistFragment.class;
-                Toast.makeText(this.getApplicationContext(), "Showing Gallery", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.profile:
                 fragmentClass = ArtistProfileFragment.class;
-                Toast.makeText(this.getApplicationContext(), "Showing Profile", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.about:
                 Toast.makeText(this.getApplicationContext(), "Showing About", Toast.LENGTH_SHORT).show();

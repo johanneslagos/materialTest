@@ -7,8 +7,11 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import no.shortcut.materialtest.main.domain.TagsTypeAdapterFactory;
+import no.shortcut.materialtest.main.model.Album.TopAlbumsWrapper;
 import no.shortcut.materialtest.main.model.Artist;
 import no.shortcut.materialtest.main.model.userContainer;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,6 +46,12 @@ public class LastfmApiRepository {
                                       @Query("api_key") String API_Key,
                                       @Query("artist") String user,
                                       @Query("format") String format );
+
+        @GET("?")
+        Call<TopAlbumsWrapper> getUserTopAlbums(@Query("method") String method,
+                                                @Query("user") String user,
+                                                @Query("api_key") String API_Key,
+                                                @Query("format") String format );
     }
 
     public static ArtistApiClient create() {
@@ -51,8 +60,14 @@ public class LastfmApiRepository {
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
                 .create();
 
+
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
+                .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

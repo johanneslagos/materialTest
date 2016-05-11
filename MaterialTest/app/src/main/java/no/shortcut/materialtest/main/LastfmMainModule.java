@@ -10,6 +10,7 @@ import dagger.Provides;
 import no.shortcut.materialtest.main.ui.activity.MainActivity;
 import no.shortcut.materialtest.main.ui.fragment.ArtistPlaylistFragment;
 import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
+import no.shortcut.materialtest.main.ui.fragment.UserTopAlbumsFragment;
 
 /**
  * Created by Sijan Gurung on 15/04/16.
@@ -23,8 +24,8 @@ import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
                 LastfmApplication.class,
                 MainActivity.class,
                 ArtistPlaylistFragment.class,
-                ArtistProfileFragment.class
-
+                ArtistProfileFragment.class,
+                UserTopAlbumsFragment.class
         },
         library = true
 )

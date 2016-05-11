@@ -3,12 +3,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/gallery"
-            android:checked="true"
-            android:icon="@drawable/vinyl_2"
-            android:title="Gallery" />
-
-        <item
             android:id="@+id/profile"
             android:checked="false"
             android:icon="@drawable/user_2"
@@ -17,7 +11,7 @@
         <item
             android:id="@+id/about"
             android:checked="false"
-            android:icon="@drawable/cd_cover_2"
+            android:icon="@drawable/ic_about"
             android:title="About" />
 
     </group>

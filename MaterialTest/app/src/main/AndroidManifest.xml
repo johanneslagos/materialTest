@@ -2,10 +2,11 @@
 <manifest package="no.shortcut.materialtest"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:allowBackup="true"
         android:name=".main.LastfmApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -13,8 +14,14 @@
         <activity android:name=".main.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.ui.activity.AlbumDetailActivity"
+            android:label="@string/title_activity_album_detail"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

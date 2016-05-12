@@ -11,4 +11,6 @@
     <color name="bgcolorDefault">#AAA</color>
     <color name="blackAlpha">#BF000000</color>
 
+    <color name="accent_translucent">#80FFEB3B</color>
+
 </resources>

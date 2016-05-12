@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import no.shortcut.materialtest.main.ui.activity.AlbumDetailActivity;
 import no.shortcut.materialtest.main.ui.activity.MainActivity;
 import no.shortcut.materialtest.main.ui.fragment.ArtistPlaylistFragment;
 import no.shortcut.materialtest.main.ui.fragment.ArtistProfileFragment;
@@ -25,7 +26,8 @@ import no.shortcut.materialtest.main.ui.fragment.UserTopAlbumsFragment;
                 MainActivity.class,
                 ArtistPlaylistFragment.class,
                 ArtistProfileFragment.class,
-                UserTopAlbumsFragment.class
+                UserTopAlbumsFragment.class,
+                AlbumDetailActivity.class
         },
         library = true
 )

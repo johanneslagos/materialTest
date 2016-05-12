@@ -1,6 +1,8 @@
 package no.shortcut.materialtest.main.ui.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -70,9 +73,23 @@ public class AlbumDetailActivity extends BaseActivity {
                     .into(imgAlbum);
         }
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(albumName);
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorAccent));
+
+        Palette.from(((BitmapDrawable)imgAlbum.getDrawable()).getBitmap()).generate(
+                new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        Palette.Swatch vibrantSwatch =
+                                palette.getVibrantSwatch();
+                        if (vibrantSwatch != null) {
+                            collapsingToolbarLayout.setExpandedTitleColor(
+                                    palette.getMutedColor(getResources().getColor(R.color.colorAccent)));
+                        }
+                    }
+                });
+
 
     }
 
